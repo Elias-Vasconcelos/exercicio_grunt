@@ -4,7 +4,7 @@ module.exports =function(grunt){
         less: {
             development: {
                 files: {
-                    'main.css': 'main.less'
+                    'dev/styles/main.css': 'src/styles/main.less'
                 }
             },
             production: {
@@ -12,24 +12,21 @@ module.exports =function(grunt){
                     compress: true,
                 },
                 files: {
-                    'main.min.css' : 'main.less'
+                    'dist/styles/main.min.css' : 'src/styles/main.less'
                 }
             }
         },
-        sass: {
-            dist: {
-                options: {
-                    style: 'compressed'
-                },
-                files: {
-                    'main2.css' : 'main2.scss'
-                }
+        watch: {
+            less: {
+                files: ['src/styles/**/*.less' ],
+                task: ['less:development']
             }
         }
     })
 
     grunt.loadNpmTasks('grunt-contrib-less');
-    grunt.loadNpmTasks('grunt-contrib-sass');
-
-    grunt.registerTask('default',['less', 'sass' ]);
+    grunt.loadNpmTasks('grunt-contrib-watch')
+    
+    grunt.registerTask('default',['watch']);
+    grunt.registerTask('build',['less:production']);
 }
